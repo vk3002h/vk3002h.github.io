@@ -1,0 +1,6 @@
+下载npm   
+https://www.python100.com/html/120836.html
+不是内部或者外部命令    写入环境变量
+https://blog.csdn.net/Jet_KILL/article/details/121535976
+npm install   注意路径
+npm i three@0.139 -S    此时你的路径就是three的加载路径
