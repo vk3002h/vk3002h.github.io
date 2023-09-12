@@ -30,22 +30,6 @@
 		  var RPMetalic = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_M.png')
 		  var RPNormal = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_N.png')
 		  var RPRoughness = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_R.png')
-	
-		  loader.load("../red.stl", function (geometry1) {
-			var material = new THREE.MeshStandardMaterial({
-			  aoMap:RPAO,	
-			  map:RPColor,
-			  normalMap:RPNormal,
-			  metalness:1.0,
-			  metalnessMap:RPMetalic,
-			  roughness:1.0,
-			  roughnessMap:RPRoughness,
-
-			}); //材质对象Material
-			const mesh1 = new THREE.Mesh(geometry1, material);
-			mesh1.rotation.x = -1.58;
-			scene.add(mesh1);
-		  });
 
 		  var wAO = new THREE.TextureLoader().load('../materials/M_Wood/Wood_AO.png')
 		  var wColor = new THREE.TextureLoader().load('../materials/M_Wood/Wood_C.png')
@@ -53,7 +37,14 @@
 		  var wNormal = new THREE.TextureLoader().load('../materials/M_Wood/Wood_N.png')
 		  var wRoughness = new THREE.TextureLoader().load('../materials/M_Wood/Wood_R.png')
 
-		  loader.load("../wood.stl", function (geometry2) {
+		  var gAO = new THREE.TextureLoader().load('../materials/M_Gold/Gold_AO.png')
+		  var gColor = new THREE.TextureLoader().load('../materials/M_Gold/Gold_C.png')
+		  var gMetalic = new THREE.TextureLoader().load('../materials/M_Gold/Gold_M.png')
+		  var gNormal = new THREE.TextureLoader().load('../materials/M_Gold/Gold_N.png')
+		  var gRoughness = new THREE.TextureLoader().load('../materials/M_Gold/Gold_R.png')
+
+		  
+		  loader.load("../models/wood.stl", function (geometry2) {
 			var material = new THREE.MeshStandardMaterial({
 			  aoMap:wAO,	
 			  map:wColor,
@@ -68,14 +59,8 @@
 			mesh2.rotation.x = -1.58;
 			scene.add(mesh2);
 		  });
-
-		  var gAO = new THREE.TextureLoader().load('../materials/M_Gold/Gold_AO.png')
-		  var gColor = new THREE.TextureLoader().load('../materials/M_Gold/Gold_C.png')
-		  var gMetalic = new THREE.TextureLoader().load('../materials/M_Gold/Gold_M.png')
-		  var gNormal = new THREE.TextureLoader().load('../materials/M_Gold/Gold_N.png')
-		  var gRoughness = new THREE.TextureLoader().load('../materials/M_Gold/Gold_R.png')
-
-		  loader.load("../ball.stl", function (geometry3) {
+		  
+		  loader.load("../models/ball.stl", function (geometry3) {
 			var material = new THREE.MeshStandardMaterial({
 			  aoMap:gAO,	
 			  map:gColor,
@@ -90,21 +75,33 @@
 			mesh3.rotation.x = -1.58;
 			scene.add(mesh3);
 		  });
+
+		  loader.load("../models/red.stl", function (geometry1) {
+			var material = new THREE.MeshStandardMaterial({
+			  aoMap:RPAO,	
+			  map:RPColor,
+			  normalMap:RPNormal,
+			  metalness:1.0,
+			  metalnessMap:RPMetalic,
+			  roughness:1.0,
+			  roughnessMap:RPRoughness,
+
+			}); //材质对象Material
+			const mesh1 = new THREE.Mesh(geometry1, material);
+			mesh1.rotation.x = -1.58;
+			scene.add(mesh1);
+		  });
 		  
 		  //点光源
 		  var point = new THREE.DirectionalLight(0xffffff);
 		  point.position.set(1000, 50, 1000);
 		  scene.add(point);
-		  scene.add(new THREE.AmbientLight(0x444444));
-		  /**
-		   * 光源设置
-		   */
-		  //点光源
+		
 		  var point = new THREE.PointLight(0xffffff);
-		  point.position.set(400, 200, 300); //点光源位置
-		  scene.add(point); //点光源添加到场景中
+		  point.position.set(400, 200, 300); 
+		  scene.add(point); 
 		  point.castShadow = true;
-		  //环境光
+		  
 		  var ambient = new THREE.AmbientLight(0x444444);
 		  scene.add(ambient);
 	
@@ -116,21 +113,20 @@
 		  /**
 		   * 相机设置
 		   */
-		  var width = window.innerWidth; //窗口宽度
-		  var height = window.innerHeight; //窗口高度
-		  var k = width / height; //窗口宽高比
-		  var s = 75; //三维场景显示范围控制系数，系数越大，显示的范围越大
-		  //创建相机对象
+		  var width = window.innerWidth;
+		  var height = window.innerHeight; 
+		  var k = width / height; 
+		  var s = 75; 
 		  var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, -10, 1000);
-		  camera.position.set(250, 0, 250); //设置相机位置
-		  camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
+		  camera.position.set(250, 0, 250); 
+		  camera.lookAt(scene.position); 
 		  /**
 		   * 创建渲染器对象
 		   */
 		  var renderer = new THREE.WebGLRenderer();
-		  renderer.setSize(width, height); //设置渲染区域尺寸
-		  renderer.setClearColor(0x504F4F, 1); //设置背景颜色
-		  document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
+		  renderer.setSize(width, height); 
+		  renderer.setClearColor(0x504F4F, 1); 
+		  document.body.appendChild(renderer.domElement); 
 		  renderer.shadowMap.enabled = true;
 		  //执行渲染操作   指定场景、相机作为参数
 		  // renderer.render(scene, camera);
