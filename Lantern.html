@@ -104,6 +104,10 @@
 			  metalnessMap:RPMetalic,
 			  roughness:1.0,
 			  roughnessMap:RPRoughness,
+			}); //材质对象Material
+			const mesh1 = new THREE.Mesh(geometry1, material);
+			mesh1.rotation.x = -1.58;
+			scene.add(mesh1);
 		  });
 		  
 		  var point = new THREE.DirectionalLight(0xffffff);
