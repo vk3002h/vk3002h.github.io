@@ -29,11 +29,10 @@
 		  var objLoader = new THREE.OBJLoader();
 		  var mtlLoader = new THREE.MTLLoader();
 
-		  var RPAO = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_AO.png')
-		  var RPColor = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_C.png')
-		  var RPMetalic = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_M.png')
-		  var RPNormal = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_N.png')
-		  var RPRoughness = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_R.png')
+		  var RPColor = new THREE.TextureLoader().load('../objImports/LanternExport_BaseColor.png')
+		  var RPMetalic = new THREE.TextureLoader().load('../objImports/LanternExport_Matallic.png')
+		  var RPNormal = new THREE.TextureLoader().load('../objImports/LanternExport_Normal.png')
+		  var RPRoughness = new THREE.TextureLoader().load('../objImports/LanternExport_Roughness.png')
 
 		  var wAO = new THREE.TextureLoader().load('../materials/M_Wood/Wood_AO.png')
 		  var wColor = new THREE.TextureLoader().load('../materials/M_Wood/Wood_C.png')
@@ -97,10 +96,14 @@
 		  });*/
 
 		  objLoader.load("../objImports/Fish Lantern.obj", function (geometry1) {
-			var material = mtlLoader.load("../objImports/Fish Lantern.mtl");
-			const mesh1 = new THREE.Mesh(geometry1, material);
-			mesh1.rotation.x = -1.58;
-			scene.add(mesh1);
+			var material = new THREE.MeshStandardMaterial({
+			  aoMap:RPAO,	
+			  map:RPColor,
+			  normalMap:RPNormal,
+			  metalness:1.0,
+			  metalnessMap:RPMetalic,
+			  roughness:1.0,
+			  roughnessMap:RPRoughness,
 		  });
 		  
 		  var point = new THREE.DirectionalLight(0xffffff);
