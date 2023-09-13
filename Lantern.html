@@ -14,6 +14,8 @@
 		<script src="../build/three.js"></script>
 		<script src="../examples/js/controls/OrbitControls.js"></script>
 		<script src="../examples/js/loaders/STLLoader.js"></script>
+		<script src="../examples/js/loaders/OBJLoader.js"></script>
+		<script src="../examples/js/loaders/MTLLoader.js"></script>
 	  </head>
 	
 	  <body>
@@ -24,6 +26,8 @@
 		  var scene = new THREE.Scene();
 	
 		  var loader = new THREE.STLLoader();
+		  var objLoader = new THREE.OBJLoader();
+		  var mtlLoader = new THREE.MTLLoader();
 
 		  var RPAO = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_AO.png')
 		  var RPColor = new THREE.TextureLoader().load('../materials/M_RedPaper/RedPaper_C.png')
@@ -44,7 +48,7 @@
 		  var gRoughness = new THREE.TextureLoader().load('../materials/M_Gold/Gold_R.png')
 
 		  
-		  loader.load("../models/wood.stl", function (geometry2) {
+		  /*loader.load("../models/wood.stl", function (geometry2) {
 			var material = new THREE.MeshStandardMaterial({
 			  aoMap:wAO,	
 			  map:wColor,
@@ -90,9 +94,15 @@
 			const mesh1 = new THREE.Mesh(geometry1, material);
 			mesh1.rotation.x = -1.58;
 			scene.add(mesh1);
+		  });*/
+
+		  objLoader.load("../objImports/Fish Lantern.obj", function (geometry1) {
+			var material = mtlLoader.load("../objImports/Fish Lantern.mtl");
+			const mesh1 = new THREE.Mesh(geometry1, material);
+			mesh1.rotation.x = -1.58;
+			scene.add(mesh1);
 		  });
 		  
-		  //点光源
 		  var point = new THREE.DirectionalLight(0xffffff);
 		  point.position.set(1000, 50, 1000);
 		  scene.add(point);
@@ -105,14 +115,9 @@
 		  var ambient = new THREE.AmbientLight(0x444444);
 		  scene.add(ambient);
 	
-		  // 辅助坐标系  参数250表示坐标系大小，可以根据场景大小去设置
 		  var axisHelper = new THREE.AxesHelper(250);
 		  scene.add(axisHelper);
-		  // console.log(scene)
-		  // console.log(scene.children)
-		  /**
-		   * 相机设置
-		   */
+
 		  var width = window.innerWidth;
 		  var height = window.innerHeight; 
 		  var k = width / height; 
@@ -120,23 +125,20 @@
 		  var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, -10, 1000);
 		  camera.position.set(250, 0, 250); 
 		  camera.lookAt(scene.position); 
-		  /**
-		   * 创建渲染器对象
-		   */
+
 		  var renderer = new THREE.WebGLRenderer();
 		  renderer.setSize(width, height); 
 		  renderer.setClearColor(0x504F4F, 1); 
 		  document.body.appendChild(renderer.domElement); 
 		  renderer.shadowMap.enabled = true;
-		  //执行渲染操作   指定场景、相机作为参数
-		  // renderer.render(scene, camera);
+		  
 		  function render() {
 			const timer = Date.now()*0.0005;
 			camera.position.x = Math.cos(timer)*4;
             camera.position.z = Math.sin(timer)*4;
 			camera.lookAt(scene.position);
-			renderer.render(scene, camera); //执行渲染操作
-			requestAnimationFrame(render); //请求再次执行渲染函数render
+			renderer.render(scene, camera); 
+			requestAnimationFrame(render); 
 			
 		  };
 
@@ -147,7 +149,7 @@
 		  animate();
 
 		  
-		  var controls = new THREE.OrbitControls(camera, renderer.domElement); //创建控件对象
+		  var controls = new THREE.OrbitControls(camera, renderer.domElement); 
 		</script>
 	  </body>
 </html>
